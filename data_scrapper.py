@@ -1,22 +1,26 @@
 #! /usr/bin/env python3
 import os
 import pandas as pd
+import json
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
 def get_data():
     """Fetch the list of companies to search for form an excel file"""
-    fh = pd.ExcelFile(f"/Users/{os.environ['USER']}/Documents/MIIRI/analysis/results_analysis_table2.xlsx")
+    fh = pd.ExcelFile(f"/Users/{os.environ['USER']}+{config['data_file']}")
     data = pd.read_excel(fh, sheet_name='hv', usecols=['name'])['name'].to_list()
     return data
 
 companies = get_data()
 
 # Set the path to chromedriver
-path_chromedriver = f"/Users/{os.environ['USER']}/Downloads/chromedriver-mac-x64/chromedriver"
+path_chromedriver = f"/Users/{os.environ['USER']}+{config['chromedriver']}"
 
 # Initialize a WebDriver instance (e.g., Chrome)
 browser = webdriver.Chrome(executable_path=path_chromedriver)
