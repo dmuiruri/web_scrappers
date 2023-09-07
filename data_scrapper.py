@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+"""
+This script scrapes various company data from from finder.fi
+"""
 import os
 import pandas as pd
 import json
